@@ -15,6 +15,9 @@ export default {
       catImage: null
     };
   },
+  created() {
+    this.fetchNewCat();
+  },
   methods: {
 		fetchNewCat() {
 			axios
