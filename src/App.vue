@@ -1,18 +1,35 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <button @click="fetchNewCat">New Cat</button> <img :src="catImage" alt="Cat Image" />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import axios from 'axios';
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
-  }
+  data() {
+    return {
+      // Were storing the cat image url in this prop
+      catImage: null
+    };
+  },
+  methods: {
+		fetchNewCat() {
+			axios
+				.get('https://api.thecatapi.com/v1/images/search')
+				.then(response => {
+					console.log('Search complete!');
+					console.log(response);
+          this.catImage = response.data[0].url;
+				})
+				.catch(err => {
+					console.log('Search failed!');
+					console.log(err);
+				});
+		},
+	},
 }
 </script>
 
